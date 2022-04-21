@@ -11,4 +11,4 @@ class ExtractionSerializer(serializers.ModelSerializer):
 class CoffeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coffee
-        fields = ['user_id', 'coffee_name', 'roaster_name', 'roast_level']
+        fields = ['coffee_name', 'roaster_name', 'roast_level']
