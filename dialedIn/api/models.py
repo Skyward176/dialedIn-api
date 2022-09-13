@@ -16,3 +16,6 @@ class Extraction(models.Model):
     mass_in= models.DecimalField(max_digits=5, decimal_places=3)
     mass_out = models.DecimalField(max_digits=5, decimal_places=3)
     notes = models.CharField(max_length=300)
+class Profile(models.Model):
+    user_id = models.ForeignKey(User, on_delete= models.CASCADE)
+    username = models.CharField(max_length=50)
