@@ -11,6 +11,8 @@ from rest_framework import status
 from rest_framework import permissions
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
+
+from rest_framework_simplejwt import authentication
 class ExtractionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
@@ -26,8 +28,10 @@ class CoffeeViewSet(viewsets.ModelViewSet):
     queryset = Coffee.objects.all()
     serializer_class = CoffeeSerializer
 
+
 class UserRegistrationView(views.APIView):
     permission_classes = [permissions.AllowAny]
+
     def post(self, request, format=None):
         data = JSONParser().parse(request)
         serializer = UserRegisterSerializer(data=data)
@@ -38,3 +42,14 @@ class UserRegistrationView(views.APIView):
                                             serializer.data.get('password'))
 
         return JsonResponse(serializer.data)
+
+
+class UserProfileView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.JWTAuthentication]
+    def get(self, request):
+
+        return(JsonResponse({
+            'username': request.user.username,
+            'user_id': request.user.id
+        }))
